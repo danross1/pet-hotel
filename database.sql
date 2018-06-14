@@ -1,0 +1,12 @@
+CREATE TABLE owners (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100)
+);
+
+CREATE TABLE pets (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	breed VARCHAR(100) NOT NULL,
+	color VARCHAR(20) NOT NULL,
+	dateCheckedIn DATE
+);
