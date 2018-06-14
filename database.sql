@@ -8,5 +8,5 @@ CREATE TABLE pets (
 	name VARCHAR(100) NOT NULL,
 	breed VARCHAR(100) NOT NULL,
 	color VARCHAR(20) NOT NULL,
-	dateCheckedIn DATE
+	checkedIn BOOLEAN DEFAULT true
 );
