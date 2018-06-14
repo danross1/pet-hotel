@@ -68,10 +68,26 @@ router.put('/:id', (req, res)=>{
     });
 });
 
-router.delete('/', (req, res)=>{
-    console.log('in DELETE owner');
-    res.sendStatus(200);
-    
+router.delete('/:id', (req, res)=>{
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            let ownerID = req.params.id;
+            let queryText = 'DELETE FROM owners WHERE id=$1';
+            
+            client.query(queryText, [ownerID], function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
+        }
+    });
 });
 
 module.exports = router;
