@@ -22,9 +22,27 @@ router.get('/', (req, res)=>{
 });
 
 router.post('/', (req, res)=>{
-    console.log('in POST pet');
-    res.sendStatus(200);
-    
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            let petName = req.body.name;
+            let petBreed = req.body.breed;
+            let petColor = req.body.color;
+            const queryText = `INSERT INTO pets (name, breed, color)
+                VALUES($1, $2, $3)`;
+            client.query(queryText, [petName, petBreed, petColor], function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
+        }
+    });
 });
 
 router.put('/', (req, res)=>{
