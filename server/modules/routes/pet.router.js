@@ -38,17 +38,72 @@ router.post('/', (req, res)=>{
                     console.log('error', errorMakingDatabaseQuery);
                     res.sendStatus(500);
                 } else {
-                    res.sendStatus(200);
+                    res.sendStatus(201);
                 }
             });
         }
     });
 });
 
-router.put('/', (req, res)=>{
-    console.log('in PUT pet');
-    res.sendStatus(200);
-    
+router.put('/:id', (req, res)=>{
+    let queryText;
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            let petID = req.params.id;
+            let petName = req.body.name || null;
+            let petBreed = req.body.breed || null;
+            let petColor = req.body.color || null;
+            let petInjection = [];
+            if(petName){
+                if(petBreed){
+                    if(petColor){
+                        // all
+                        queryText = `UPDATE pets SET name=$1, breed=$2, color=$3 WHERE id=$4`;
+                        petInjection = [petName, petBreed, petColor, petID];
+                    } else {
+                        // name and breed
+                        queryText = `UPDATE pets SET name=$1, breed=$2 WHERE id=$3`;
+                        petInjection = [petName, petBreed, petID];
+                    }
+                } else if(petColor){
+                    // name and color
+                    queryText = `UPDATE pets SET name=$1, color=$2 WHERE id=$3`;
+                    petInjection = [petName, petColor, petID];
+                } else {
+                    // name
+                    queryText = `UPDATE pets SET name=$1 WHERE id=$2`;
+                    petInjection = [petName, petID];
+                }
+            } else if(petBreed){
+                if(petColor){
+                    // breed and color
+                    queryText = `UPDATE pets SET breed=$1, color=$2 WHERE id=$3`;
+                    petInjection = [petBreed, petColor, petID];
+                } else {
+                    // breed
+                    queryText = `UPDATE pets SET breed=$1 WHERE id=$2`;
+                    petInjection = [petBreed, petID];
+                }
+            } else {
+                // color
+                queryText = `UPDATE pets color=$1 WHERE id=$2`;
+                    petInjection = [petColor, petID];
+                
+            }
+            client.query(queryText, petInjection, function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
+        }
+    });
 });
 
 router.delete('/', (req, res)=>{
