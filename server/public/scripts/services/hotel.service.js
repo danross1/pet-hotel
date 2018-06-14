@@ -12,5 +12,14 @@ app.service('HotelService', ['$http', function($http){
         })
     }
 
-    sv.getOwners();
+    sv.addPet = function(dataToSend){
+        $http({
+            method: 'POST',
+            url: '/pet',
+            data: dataToSend
+        }).then(function(response){
+            console.log('back from POST pet:', response.data);
+            
+        })
+    }
 }]);

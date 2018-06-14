@@ -6,4 +6,14 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         console.log(self.owners);
         
     })
+
+    self.addPet = function(){
+        let dataToSend = {
+            name: self.petNameIn,
+            breed: self.petBreedIn,
+            color: self.petBreedIn
+        };
+        HotelService.addPet(dataToSend);
+        
+    }
 }]);
