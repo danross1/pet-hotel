@@ -1,1 +1,12 @@
-<h2>Dashboard</h2>
+<h3>Add Pet</h3>
+
+<form name="addPetForm" ng-submit="">
+    <input type="text" placeholder="Pet Name" ng-model="vm.petNameIn">
+    <input type="text" placeholder="Pet Color" ng-model="vm.petColorIn">
+    <input type="text" placeholder="Pet Breed" ng-model="vm.petBreedIn">
+    <select ng-model="vm.ownerIn">
+        <option ng-repeat="owner in vm.owners" value="owner.id">{{owner.name}}</option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
