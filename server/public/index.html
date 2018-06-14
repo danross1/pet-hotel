@@ -5,11 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Pet Hotel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="./vendors/angular.js"></script>
     <script src="./vendors/angular-route.js"></script>
+    <script src="./scripts/client.js"></script>
+    <script src="./scripts/services/hotel.service.js"></script>
+    <script src="./scripts/controllers/dashboard.controller.js"></script>
+    <script src="./scripts/controllers/owner.controller.js"></script>
 </head>
-<body>
+<body ng-app="HotelApp">
     <h1>Pet Hotel</h1>
+
+    <nav>
+        <a href="#!/">Dashboard</a>
+        <a href="#!/owner">Owner</a>
+    </nav>
+
+    <ng-view></ng-view>
+    
 </body>
 </html>
