@@ -8,6 +8,27 @@ router.get('/', (req, res)=>{
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
+            let queryText = `SELECT owners.name, owners.id, count(owners.name) as petCount FROM owners
+                JOIN pets ON owners.id = owner_id GROUP BY owners.name, owners.id ORDER BY owners.name;`
+            client.query(queryText, function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
+router.get('/names', (req, res)=>{
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
             client.query('SELECT * FROM owners;', function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {

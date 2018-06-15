@@ -1,9 +1,9 @@
 app.controller('DashboardController', ['HotelService', function(HotelService){
     let self = this;
     
-    HotelService.getOwners().then(function(){
-        self.owners = HotelService.owners.list;
-        console.log(self.owners);
+    HotelService.getOwnerNames().then(function(){
+        self.ownerNames = HotelService.ownerNames.list;
+        console.log(self.ownerNames);
         
     });
 
@@ -18,7 +18,7 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         let dataToSend = {
             name: self.petNameIn,
             breed: self.petBreedIn,
-            color: self.petBreedIn,
+            color: self.petColorIn,
             owner_id: self.ownerIn
         };
         HotelService.addPet(dataToSend).then(function(){
