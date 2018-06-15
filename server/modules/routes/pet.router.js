@@ -8,7 +8,9 @@ router.get('/', (req, res)=>{
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query('SELECT * FROM pets;', function (errorMakingDatabaseQuery, result) {
+            let queryText = `SELECT owners.name as owner, pets.name as pet, breed, color, checkedIn, checkInDate, pets.id FROM pets
+                JOIN owners ON owners.id = owner_id`;            
+            client.query(queryText, function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);
@@ -22,6 +24,8 @@ router.get('/', (req, res)=>{
 });
 
 router.post('/', (req, res)=>{
+    console.log('req.body:', req.body);
+    
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
@@ -30,9 +34,12 @@ router.post('/', (req, res)=>{
             let petName = req.body.name;
             let petBreed = req.body.breed;
             let petColor = req.body.color;
-            const queryText = `INSERT INTO pets (name, breed, color)
-                VALUES($1, $2, $3)`;
-            client.query(queryText, [petName, petBreed, petColor], function (errorMakingDatabaseQuery, result) {
+            let ownerID = req.body.owner_id;
+            console.log('ownerID:', ownerID);
+            
+            let queryText = `INSERT INTO pets (name, breed, color, owner_id)
+                VALUES($1, $2, $3, $4)`;
+            client.query(queryText, [petName, petBreed, petColor, ownerID], function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);

@@ -5,8 +5,33 @@
     <input type="text" placeholder="Pet Color" ng-model="vm.petColorIn">
     <input type="text" placeholder="Pet Breed" ng-model="vm.petBreedIn">
     <select ng-model="vm.ownerIn">
-        <option ng-repeat="owner in vm.owners" value="owner.id">{{owner.name}}</option>
+        <option ng-repeat="owner in vm.owners" value="{{owner.id}}">{{owner.name}}</option>
     </select>
     <input type="submit" value="Submit">
 </form>
 
+<h3>History</h3>
+
+<table>
+    <tr>
+        <th>Owner</th>
+        <th>Pet</th>
+        <th>Breed</th>
+        <th>Color</th>
+        <th>Checked In</th>
+        <th>Actions</th>     
+    </tr>
+    <tr ng-repeat="pet in vm.pets" ng-switch="pet.checkedin">
+        <td>{{pet.owner}}</td>
+        <td>{{pet.pet}}</td>
+        <td>{{pet.breed}}</td>
+        <td>{{pet.color}}</td>
+        <td ng-switch-when="true">{{pet.checkindate}}</td>
+        <td ng-switch-when="false">No</td>
+        <td>
+            <button ng-click="vm.deletePet(pet)">Delete</button>
+            <button ng-switch-when="false" ng-click="vm.changeStatus(pet)">Check In</button>
+            <button ng-switch-when="true" ng-click="vm.changeStatus(pet)">Check Out</button>
+        </td>
+    </tr>
+</table>
