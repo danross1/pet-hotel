@@ -35,7 +35,9 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
     self.changeStatus = function(pet){
         console.log('pet:', pet);
         
-        HotelService.changeStatus(pet);
+        HotelService.changeStatus(pet).then(function(){
+            self.getPets();
+        })
     }
 
     self.getPets();
