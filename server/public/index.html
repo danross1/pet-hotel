@@ -21,16 +21,16 @@
     <link href="./vendors/angular-material.css" rel="stylesheet" type="text/css">
     <link href="./styles/style.css" rel="stylesheet" type="text/css">
 </head>
-<body ng-app="HotelApp">
+<body ng-app="HotelApp" layout="column">
     <header>
         <h1>Pet Hotel</h1>
 
-        <nav>
-            <a href="#!/">Dashboard</a>
-            <a href="#!/owner">Owner</a>
+        <nav layout-align="space-around stretch">
+            <button><a href="#!/">Dashboard</a></button>
+            <button><a href="#!/owner">Owner</a></button>
         </nav>
     </header>
-    <ng-view></ng-view>
+    <ng-view class="container" layout="row" layout-xs="column"flex></ng-view>
     
 </body>
 </html>
