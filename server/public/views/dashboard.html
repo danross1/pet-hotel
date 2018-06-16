@@ -30,6 +30,7 @@
         <td ng-switch-when="false">No</td>
         <td>
             <button ng-click="vm.deletePet(pet)">Delete</button>
+            <button ng-click="vm.editPet(pet)">Edit</button>
             <button ng-switch-when="false" ng-click="vm.changeStatus(pet)">Check In</button>
             <button ng-switch-when="true" ng-click="vm.changeStatus(pet)">Check Out</button>
         </td>

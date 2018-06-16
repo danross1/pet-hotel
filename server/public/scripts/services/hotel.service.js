@@ -104,4 +104,8 @@ app.service('HotelService', ['$http', function($http){
             console.log('err:', error);
         })
     }
+
+    // sv.editPet = function(pet){
+
+    // }
 }]);

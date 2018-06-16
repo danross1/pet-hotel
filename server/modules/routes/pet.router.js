@@ -8,7 +8,7 @@ router.get('/', (req, res)=>{
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            let queryText = `SELECT owners.name as owner, pets.name as pet, breed, color, checkedIn, checkInDate, pets.id FROM pets
+            let queryText = `SELECT owners.name as owner, pets.name as pet, breed, color, checkedIn, checkInDate, pets.id, owner_id FROM pets
                 JOIN owners ON owners.id = owner_id`;            
             client.query(queryText, function (errorMakingDatabaseQuery, result) {
                 done();
@@ -87,6 +87,8 @@ router.put('/status/:id', (req, res)=>{
 
 router.put('/:id', (req, res)=>{
     let queryText;
+    console.log('req.body:', req.body);
+    
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             console.log('error', errorConnectingToDatabase);
@@ -96,42 +98,43 @@ router.put('/:id', (req, res)=>{
             let petName = req.body.name || null;
             let petBreed = req.body.breed || null;
             let petColor = req.body.color || null;
+            let ownerID = req.body.owner_id || null;
             let petInjection = [];
-            if(petName){
-                if(petBreed){
-                    if(petColor){
-                        // all
-                        queryText = `UPDATE pets SET name=$1, breed=$2, color=$3 WHERE id=$4`;
-                        petInjection = [petName, petBreed, petColor, petID];
-                    } else {
-                        // name and breed
-                        queryText = `UPDATE pets SET name=$1, breed=$2 WHERE id=$3`;
-                        petInjection = [petName, petBreed, petID];
-                    }
-                } else if(petColor){
-                    // name and color
-                    queryText = `UPDATE pets SET name=$1, color=$2 WHERE id=$3`;
-                    petInjection = [petName, petColor, petID];
-                } else {
-                    // name
-                    queryText = `UPDATE pets SET name=$1 WHERE id=$2`;
-                    petInjection = [petName, petID];
-                }
-            } else if(petBreed){
-                if(petColor){
-                    // breed and color
-                    queryText = `UPDATE pets SET breed=$1, color=$2 WHERE id=$3`;
-                    petInjection = [petBreed, petColor, petID];
-                } else {
-                    // breed
-                    queryText = `UPDATE pets SET breed=$1 WHERE id=$2`;
-                    petInjection = [petBreed, petID];
-                }
-            } else {
-                // color
-                queryText = `UPDATE pets color=$1 WHERE id=$2`;
-                    petInjection = [petColor, petID];
-            }
+            // if(petName){
+            //     if(petBreed){
+            //         if(petColor){
+            //             // all
+            //             queryText = `UPDATE pets SET name=$1, breed=$2, color=$3 WHERE id=$4`;
+            //             petInjection = [petName, petBreed, petColor, petID];
+            //         } else {
+            //             // name and breed
+            //             queryText = `UPDATE pets SET name=$1, breed=$2 WHERE id=$3`;
+            //             petInjection = [petName, petBreed, petID];
+            //         }
+            //     } else if(petColor){
+            //         // name and color
+            //         queryText = `UPDATE pets SET name=$1, color=$2 WHERE id=$3`;
+            //         petInjection = [petName, petColor, petID];
+            //     } else {
+            //         // name
+            //         queryText = `UPDATE pets SET name=$1 WHERE id=$2`;
+            //         petInjection = [petName, petID];
+            //     }
+            // } else if(petBreed){
+            //     if(petColor){
+            //         // breed and color
+            //         queryText = `UPDATE pets SET breed=$1, color=$2 WHERE id=$3`;
+            //         petInjection = [petBreed, petColor, petID];
+            //     } else {
+            //         // breed
+            //         queryText = `UPDATE pets SET breed=$1 WHERE id=$2`;
+            //         petInjection = [petBreed, petID];
+            //     }
+            // } else {
+            //     // color
+            //     queryText = `UPDATE pets color=$1 WHERE id=$2`;
+            //         petInjection = [petColor, petID];
+            // }
             client.query(queryText, petInjection, function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {

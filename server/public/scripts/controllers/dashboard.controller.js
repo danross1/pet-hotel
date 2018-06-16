@@ -40,6 +40,11 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         })
     }
 
+    // self.editPet = function(pet){
+    //    HotelService.editPet(pet)
+        
+    // }
+
     self.getPets();
     
 }]);
