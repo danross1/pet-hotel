@@ -52,6 +52,39 @@ router.post('/', (req, res)=>{
     });
 });
 
+router.put('/status/:id', (req, res)=>{
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
+            console.log('error', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            let queryText;
+            let petID = req.params.id;
+            let petInjection = [petID];
+            let checkedIn = req.body.checkedIn;
+            
+            if(checkedIn){
+                queryText = 'UPDATE pets SET checkedin=false, checkindate=null WHERE id=$1';
+            } else {
+                let date = new Date();
+                console.log('date:', date);
+                petInjection.push(date);
+                
+                queryText = 'UPDATE pets SET checkedin=true, checkindate=$2 WHERE id=$1';
+            }
+            client.query(queryText, petInjection, function (errorMakingDatabaseQuery, result) {
+                done();
+                if (errorMakingDatabaseQuery) {
+                    console.log('error', errorMakingDatabaseQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
+        }
+    })
+})
+
 router.put('/:id', (req, res)=>{
     let queryText;
     pool.connect(function (errorConnectingToDatabase, client, done) {
@@ -98,7 +131,6 @@ router.put('/:id', (req, res)=>{
                 // color
                 queryText = `UPDATE pets color=$1 WHERE id=$2`;
                     petInjection = [petColor, petID];
-                
             }
             client.query(queryText, petInjection, function (errorMakingDatabaseQuery, result) {
                 done();

@@ -32,6 +32,12 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         })
     }
 
+    self.changeStatus = function(pet){
+        console.log('pet:', pet);
+        
+        HotelService.changeStatus(pet);
+    }
+
     self.getPets();
     
 }]);

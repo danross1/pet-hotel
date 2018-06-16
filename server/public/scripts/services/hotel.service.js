@@ -86,4 +86,22 @@ app.service('HotelService', ['$http', function($http){
             console.log('err:', error);
         })
     }
+
+    sv.changeStatus = function(pet){
+        console.log('pet.id:', pet.id);
+        let dataToSend = {
+            checkedIn: pet.checkedin
+        }
+        console.log('dataToSend:', dataToSend);
+        
+        return $http({
+            method: 'PUT',
+            url: `pet/status/${pet.id}`,
+            data: dataToSend
+        }).then(function(response){
+            console.log('back from change status:', response.data);
+        }).catch(function(error){
+            console.log('err:', error);
+        })
+    }
 }]);
