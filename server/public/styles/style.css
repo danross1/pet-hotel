@@ -3,7 +3,7 @@ header {
     background-color: #8D2F5B;
 }
 
-.form {
+.cute div {
     /* background-color: #953255 */
     background-color: #8A0041;
 }
@@ -26,12 +26,28 @@ header {
     font-family: "Philosopher";
 } */
 
-md-card {
+
+.cute md-card {
     background-color: #915B74;
 }
 
+.spoopy md-card {
+    background-color: black;
+    color: red;
+}
+
+.spoopy md-content {
+    background-color: black;
+    color: red;
+}
+
+.spoopy div {
+    background-color: black;
+}
+
 .spoopy {
-    font-family: "Nosifer Caps":
+    font-family: "Nosifer Caps";
+    color: red;
 }
 
 .cute {

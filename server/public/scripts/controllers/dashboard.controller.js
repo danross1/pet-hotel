@@ -22,7 +22,8 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
             name: self.petNameIn,
             breed: self.petBreedIn,
             color: self.petColorIn,
-            owner_id: self.ownerIn
+            owner_id: self.ownerIn,
+            image: self.imageIn
         };
         HotelService.addPet(dataToSend).then(function(){
             self.getPets();

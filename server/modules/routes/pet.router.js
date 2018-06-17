@@ -35,11 +35,12 @@ router.post('/', (req, res)=>{
             let petBreed = req.body.breed;
             let petColor = req.body.color;
             let ownerID = req.body.owner_id;
+            let image = req.body.image;
             console.log('ownerID:', ownerID);
             
-            let queryText = `INSERT INTO pets (name, breed, color, owner_id)
-                VALUES($1, $2, $3, $4)`;
-            client.query(queryText, [petName, petBreed, petColor, ownerID], function (errorMakingDatabaseQuery, result) {
+            let queryText = `INSERT INTO pets (name, breed, color, owner_id, image)
+                VALUES($1, $2, $3, $4, $5)`;
+            client.query(queryText, [petName, petBreed, petColor, ownerID, image], function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
                     console.log('error', errorMakingDatabaseQuery);

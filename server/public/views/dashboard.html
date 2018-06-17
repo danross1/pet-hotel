@@ -1,13 +1,26 @@
-<div flex="30" class="form">
+<div flex="30" id="side">
     <h3>Add Pet</h3>
 
-    <form ng-submit="vm.addPet()">
+    <form ng-submit="vm.addPet()" layout="column">
         <input type="text" placeholder="Pet Name" ng-model="vm.petNameIn">
         <input type="text" placeholder="Pet Color" ng-model="vm.petColorIn">
         <input type="text" placeholder="Pet Breed" ng-model="vm.petBreedIn">
         Owner:
         <select ng-model="vm.ownerIn">
             <option ng-repeat="owner in vm.ownerNames" value="{{owner.id}}">{{owner.name}}</option>
+        </select>
+        Pet Category:
+        <select ng-model="vm.imageIn">
+            <option value="bird.png">Bird</option>
+            <option value="cat.png">Cat</option>
+            <option value="cthulu.png">Cthulu</option>
+            <option value="dog.png">Dog</option>
+            <option value="hamster.png">Hamster</option>
+            <option value="rabbit.png">Rabbit</option>
+            <option value="snake.png">Snake</option>
+            <option value="turtle.png">Turtle</option>
+            <option value="whale.png">Whale</option>
+
         </select>
         <input type="submit" value="Submit">
     </form>
@@ -46,20 +59,20 @@
 </div>
 
 <md-content flex="70" class="table">
-    <h3>History</h3>
+    <h3>Pets</h3>
 
     <md-card ng-repeat="pet in vm.pets" layout-align="center center">
         <md-card-avatar>
-            <img class="md-user-avatar" src="../images/{{vm.context}}/{{pet.image}}" height="200" width="200">
+            <img class="md-user-avatar" src="../images/{{vm.context}}/{{pet.image}}" height="300" width="300">
         </md-card-avatar>
         <md-card-header-text layout="column">
             <span class="md-title">{{pet.pet}}</span>
             <span class="md-subhead">Friend of {{pet.owner}}</span>
         </md-card-header-text>
         <md-card-content>
-            <div>Breed: {{pet.breed}}</div>
-            <div>Color: {{pet.color}}</div>
-            <div ng-switch="pet.checkedin">Checked In?:
+            <span>Breed: {{pet.breed}}</span> <br>
+            <span>Color: {{pet.color}}</span> <br>
+            <span ng-switch="pet.checkedin">Checked In?:
                 <span ng-switch-when="true">{{pet.checkindate}}</span>
                 <span ng-switch-when="false">No</span>
             </span>
