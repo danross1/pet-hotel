@@ -1,27 +1,33 @@
-<md-dialog class="edit">
-    Enter Whatever You Want to Edit:
-    {{petToEdit.pet}}
-    <form ng-submit="vm.editPet(pet)">
-       <md-input-container>
-           <label>Name:</label>
-          <input type="text" ng-model="vm.petNameEdit"> <br>
-       </md-input-container>
-       <md-input-container>
-            <label>Color:</label>
-           <input type="text" ng-model="vm.petColorEdit"> <br>
-        </md-input-container>
-        <md-input-container>
-            <label>Breed:</label>
-            <input type="text" ng-model="vm.petBreedEdit"> <br>
-        </md-input-container>
-        <md-input-type >
-            Owner:
-            <select ng-model="vm.ownerEdit">
-                <option ng-repeat="owner in vm.ownerNames" value="{{owner.id}}">{{owner.name}}</option>
-            </select>
-        </md-input-type> 
-        <md-input-type>
-            <input type="submit" value="Submit Changes">
-        </md-input-type>  
-    </form>
-</md-dialog>
+<table>
+    <tr>
+        <th>Owner</th>
+        <th>Pet</th>
+        <th>Breed</th>
+        <th>Color</th>
+        <th>Checked In</th>
+        <th>Actions</th>     
+    </tr>
+    <tr ng-repeat="pet in vm.pets" ng-switch="pet.checkedin">
+        <td>{{pet.owner}}</td>
+        <td>{{pet.pet}}</td>
+        <td>{{pet.breed}}</td>
+        <td>{{pet.color}}</td>
+        <td ng-switch-when="true">{{pet.checkindate}}</td>
+        <td ng-switch-when="false">No</td>
+        <td ng-switch="pet.checkedin">
+            <button ng-click="vm.deletePet(pet)">Delete</button>
+            <button ng-switch-when="false" ng-click="vm.changeStatus(pet)">Check In</button>
+            <button ng-switch-when="true" ng-click="vm.changeStatus(pet)">Check Out</button>
+        </td>
+    </tr>
+</table>
+
+<md-card ng-repeat="pet in vm.pets">
+    <md-card-avatar>
+        <img class="md-user-avatar" src="#">
+    </md-card-avatar>
+    <md-card-header-text>
+        <span class="md-title">{{pet.pet}}</span>
+        <span class="md-subhead">Friend of {{pet.owner}}</span>
+    </md-card-header-text>
+</md-card>

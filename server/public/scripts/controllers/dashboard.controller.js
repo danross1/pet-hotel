@@ -2,6 +2,7 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
                function(HotelService, $mdBottomSheet, $mdDialog){
     let self = this;
     self.editMode = false;
+    self.context = 'cute';
     
     HotelService.getOwnerNames().then(function(){
         self.ownerNames = HotelService.ownerNames.list;
@@ -94,6 +95,15 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
         self.editMode = !self.editMode;
     }
 
+    self.changeContext = function(){
+        if(self.context == 'cute'){
+            self.context = 'spoopy';
+        } else {
+            self.context = 'cute';
+        }
+        console.log('self.context:', self.context);
+        
+    }
     self.getPets();
     
 }]);

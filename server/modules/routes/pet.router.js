@@ -8,7 +8,7 @@ router.get('/', (req, res)=>{
             console.log('error', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            let queryText = `SELECT owners.name as owner, pets.name as pet, breed, color, checkedIn, checkInDate, pets.id, owner_id FROM pets
+            let queryText = `SELECT owners.name as owner, pets.name as pet, breed, color, checkedIn, checkInDate, pets.id, owner_id, image FROM pets
                 JOIN owners ON owners.id = owner_id`;            
             client.query(queryText, function (errorMakingDatabaseQuery, result) {
                 done();
