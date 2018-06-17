@@ -1,11 +1,27 @@
 header {
-    background-color: #68266F;
+    /* background-color: #68266F; */
+    background-color: #8D2F5B;
 }
 
 .form {
-    background-color: #953255
+    /* background-color: #953255 */
+    background-color: #8A0041;
 }
 
 .table {
-    background-color: #AA5439;
+    /* background-color: #AA5439; */
+    background-color: #8C0243;
 }
+
+.edit {
+    /* background-color: #9F3548; */
+    background-color: #915B74;
+}
+
+/* header {
+    font-family: "Nosifer Caps";
+}
+
+.container {
+    font-family: "Philosopher";
+} */

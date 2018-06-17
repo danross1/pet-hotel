@@ -1,38 +1,73 @@
-<h3>Add Pet</h3>
+<div flex="30" class="form">
+    <h3>Add Pet</h3>
 
-<form ng-submit="vm.addPet()">
-    <input type="text" placeholder="Pet Name" ng-model="vm.petNameIn">
-    <input type="text" placeholder="Pet Color" ng-model="vm.petColorIn">
-    <input type="text" placeholder="Pet Breed" ng-model="vm.petBreedIn">
-    <select ng-model="vm.ownerIn">
-        <option ng-repeat="owner in vm.ownerNames" value="{{owner.id}}">{{owner.name}}</option>
+    <form ng-submit="vm.addPet()">
+        <input type="text" placeholder="Pet Name" ng-model="vm.petNameIn">
+        <input type="text" placeholder="Pet Color" ng-model="vm.petColorIn">
+        <input type="text" placeholder="Pet Breed" ng-model="vm.petBreedIn">
+        Owner:
+        <select ng-model="vm.ownerIn">
+            <option ng-repeat="owner in vm.ownerNames" value="{{owner.id}}">{{owner.name}}</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h4>Edit Pet</h4>
+    <select ng-model="vm.petToEdit">
+        <option ng-repeat="pet in vm.pets" value="{{pet.id}}">{{pet.pet}}</option>
     </select>
-    <input type="submit" value="Submit">
-</form>
+    <button type="submit" ng-click="vm.toggleEditMode()">Open Editor</button> <br> <br>
+    <form ng-submit="vm.editPet()" ng-if="vm.editMode">
+        Only Enter That Which You Wish To Change
+        <md-input-container>
+            <label>Name:</label>
+            <input type="text" ng-model="vm.petNameEdit"> <br>
+        </md-input-container>
+        <md-input-container>
+            <label>Color:</label>
+            <input type="text" ng-model="vm.petColorEdit"> <br>
+        </md-input-container>
+        <md-input-container>
+            <label>Breed:</label>
+            <input type="text" ng-model="vm.petBreedEdit"> <br>
+        </md-input-container>
+        <md-input-type >
+            Owner:
+            <select ng-model="vm.ownerEdit">
+                <option ng-repeat="owner in vm.ownerNames" value="{{owner.id}}">{{owner.name}}</option>
+            </select>
+        </md-input-type> 
+        <md-input-type>
+            <input type="submit" value="Submit Changes">
+        </md-input-type>  
+    </form>
+</div>
 
-<h3>History</h3>
+<md-content flex="70" class="table">
+    <h3>History</h3>
 
-<table>
-    <tr>
-        <th>Owner</th>
-        <th>Pet</th>
-        <th>Breed</th>
-        <th>Color</th>
-        <th>Checked In</th>
-        <th>Actions</th>     
-    </tr>
-    <tr ng-repeat="pet in vm.pets" ng-switch="pet.checkedin">
-        <td>{{pet.owner}}</td>
-        <td>{{pet.pet}}</td>
-        <td>{{pet.breed}}</td>
-        <td>{{pet.color}}</td>
-        <td ng-switch-when="true">{{pet.checkindate}}</td>
-        <td ng-switch-when="false">No</td>
-        <td>
-            <button ng-click="vm.deletePet(pet)">Delete</button>
-            <button ng-click="vm.editPet(pet)">Edit</button>
-            <button ng-switch-when="false" ng-click="vm.changeStatus(pet)">Check In</button>
-            <button ng-switch-when="true" ng-click="vm.changeStatus(pet)">Check Out</button>
-        </td>
-    </tr>
-</table>
+    <table>
+        <tr>
+            <th>Owner</th>
+            <th>Pet</th>
+            <th>Breed</th>
+            <th>Color</th>
+            <th>Checked In</th>
+            <th>Actions</th>     
+        </tr>
+        <tr ng-repeat="pet in vm.pets" ng-switch="pet.checkedin">
+            <td>{{pet.owner}}</td>
+            <td>{{pet.pet}}</td>
+            <td>{{pet.breed}}</td>
+            <td>{{pet.color}}</td>
+            <td ng-switch-when="true">{{pet.checkindate}}</td>
+            <td ng-switch-when="false">No</td>
+            <td ng-switch="pet.checkedin">
+                <button ng-click="vm.deletePet(pet)">Delete</button>
+                <button ng-click="vm.toggleEditMode(pet)">Edit</button>
+                <button ng-switch-when="false" ng-click="vm.changeStatus(pet)">Check In</button>
+                <button ng-switch-when="true" ng-click="vm.changeStatus(pet)">Check Out</button>
+            </td>
+        </tr>
+    </table>
+</md-content>

@@ -1,5 +1,7 @@
-app.controller('DashboardController', ['HotelService', function(HotelService){
+app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDialog',
+               function(HotelService, $mdBottomSheet, $mdDialog){
     let self = this;
+    self.editMode = false;
     
     HotelService.getOwnerNames().then(function(){
         self.ownerNames = HotelService.ownerNames.list;
@@ -40,10 +42,57 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         })
     }
 
-    // self.editPet = function(pet){
-    //    HotelService.editPet(pet)
-        
+    // self.openBottomSheet = function(pet){
+    //     $mdBottomSheet.show({
+    //         templateUrl: '/views/edit.html',
+    //         controller: 'DashboardController as vm'
+    //     }).then(function(){
+    //         console.log('clicked out of bottom sheet');
+            
+    //     }).catch(function(){
+    //         console.log('hit the escape');
+            
+    //     })
     // }
+
+    // self.closeBottomSheet = function(){
+    //     $mdBottomSheet.hide();
+    // }
+
+    // self.showEditDialog = function(pet){
+    //     console.log('pet:', pet);
+    //     $mdDialog.show({
+    //         templateUrl: '/views/edit.html',
+    //         controller: 'DashboardController as vm',
+    //         locals: {petToEdit : pet},
+    //         clickOutsideToClose: true
+    //     })
+    // }
+
+    self.editPet = function(){
+        let petID = self.petToEdit;
+        let dataToSend = {
+            name: self.petNameEdit,
+            breed: self.petBreedEdit,
+            color: self.petColorEdit,
+            owner_id: self.ownerEdit
+        }
+        console.log('petID:', petID);
+        console.log('dataToSend:', dataToSend);
+        if(!dataToSend.name && !dataToSend.breed && 
+            !dataToSend.color && !dataToSend.owner_id){
+            alert('Well you\'ve got to change something!');
+            
+        } else {
+            HotelService.editPet(petID, dataToSend).then(function(){
+            self.getPets();
+            })
+        }
+    };
+
+    self.toggleEditMode = function(){
+        self.editMode = !self.editMode;
+    }
 
     self.getPets();
     

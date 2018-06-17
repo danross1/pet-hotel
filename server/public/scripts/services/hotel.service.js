@@ -105,7 +105,15 @@ app.service('HotelService', ['$http', function($http){
         })
     }
 
-    // sv.editPet = function(pet){
-
-    // }
+    sv.editPet = function(petID, dataToSend){
+        return $http({
+            method: 'PUT',
+            url: 'pet/' + petID,
+            data: dataToSend
+        }).then(function(response){
+            console.log('back from PUT pet:', response.data); 
+        }).catch(function(error){
+            console.log('err:', error);
+        })
+    }
 }]);

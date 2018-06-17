@@ -19,15 +19,17 @@
     <script src="./scripts/controllers/owner.controller.js" charset="utf-8"></script>
     <!-- CSS -->
     <link href="./vendors/angular-material.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nosifer+Caps" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Philosopher" />
     <link href="./styles/style.css" rel="stylesheet" type="text/css">
 </head>
 <body ng-app="HotelApp" layout="column">
     <header>
-        <h1>Pet Hotel</h1>
+        <h1>The Hotel Over Innsmouth</h1>
 
-        <nav layout-align="space-around stretch">
-            <button><a href="#!/">Dashboard</a></button>
-            <button><a href="#!/owner">Owner</a></button>
+        <nav layout="row" layout-align="space-around stretch">
+            <button flex><a href="#!/">Dashboard</a></button>
+            <button flex><a href="#!/owner">Owners</a></button>
         </nav>
     </header>
     <ng-view class="container" layout="row" layout-xs="column"flex></ng-view>
