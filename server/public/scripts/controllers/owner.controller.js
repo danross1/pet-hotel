@@ -14,6 +14,7 @@ app.controller('OwnerController', ['HotelService', function(HotelService){
         };
         HotelService.addOwner(dataToSend)
             .then(function(){
+                self.clearInputs();
                 HotelService.getOwners().then(function(){
                     self.owners = HotelService.owners.list;
                     console.log('OWNER CONTROLLER owners:', self.owners);
@@ -26,6 +27,10 @@ app.controller('OwnerController', ['HotelService', function(HotelService){
         HotelService.deleteOwner(owner).then(function(){
             self.getOwners();
         })
+    }
+
+    self.clearInputs = function(){
+        self.ownerName = '';
     }
 
     self.getOwners();

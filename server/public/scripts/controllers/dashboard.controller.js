@@ -1,5 +1,4 @@
-app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDialog',
-               function(HotelService, $mdBottomSheet, $mdDialog){
+app.controller('DashboardController', ['HotelService', function(HotelService){
     let self = this;
     self.editMode = false;
     self.context = 'cute';
@@ -26,6 +25,7 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
             image: self.imageIn
         };
         HotelService.addPet(dataToSend).then(function(){
+            self.clearInputs();
             self.getPets();
         })
     }
@@ -44,33 +44,6 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
         })
     }
 
-    // self.openBottomSheet = function(pet){
-    //     $mdBottomSheet.show({
-    //         templateUrl: '/views/edit.html',
-    //         controller: 'DashboardController as vm'
-    //     }).then(function(){
-    //         console.log('clicked out of bottom sheet');
-            
-    //     }).catch(function(){
-    //         console.log('hit the escape');
-            
-    //     })
-    // }
-
-    // self.closeBottomSheet = function(){
-    //     $mdBottomSheet.hide();
-    // }
-
-    // self.showEditDialog = function(pet){
-    //     console.log('pet:', pet);
-    //     $mdDialog.show({
-    //         templateUrl: '/views/edit.html',
-    //         controller: 'DashboardController as vm',
-    //         locals: {petToEdit : pet},
-    //         clickOutsideToClose: true
-    //     })
-    // }
-
     self.editPet = function(){
         let petID = self.petToEdit;
         let dataToSend = {
@@ -86,6 +59,7 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
             alert('Well you\'ve got to change something!');
             
         } else {
+            self.toggleEditMode();
             HotelService.editPet(petID, dataToSend).then(function(){
             self.getPets();
             })
@@ -105,6 +79,15 @@ app.controller('DashboardController', ['HotelService', '$mdBottomSheet', '$mdDia
         console.log('self.context:', self.context);
         
     }
+
+    self.clearInputs = function(){
+        self.petNameIn = '';
+        self.petBreedIn = '';
+        self.petColorIn = '';
+        self.ownerIn = '';
+        self.imageIn = '';
+    }
+
     self.getPets();
     
 }]);

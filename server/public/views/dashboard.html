@@ -1,4 +1,4 @@
-<div flex="30" id="side">
+<div flex="30" class="side">
     <h3>Add Pet</h3>
 
     <form ng-submit="vm.addPet()" layout="column">
@@ -31,7 +31,6 @@
     </select>
     <button type="submit" ng-click="vm.toggleEditMode()">Open Editor</button> <br> <br>
     <form ng-submit="vm.editPet()" ng-if="vm.editMode">
-        Only Enter That Which You Wish To Change
         <md-input-container>
             <label>Name:</label>
             <input type="text" ng-model="vm.petNameEdit"> <br>
@@ -54,8 +53,6 @@
             <input type="submit" value="Submit Changes">
         </md-input-type>  
     </form>
-
-    <button ng-click="vm.changeContext()">Change Context</button>
 </div>
 
 <md-content flex="70" class="table">
@@ -83,4 +80,11 @@
             <md-button ng-if="pet.checkedin" ng-click="vm.changeStatus(pet)">Check Out</md-button>
         </md-card-actions>
     </md-card>
+
+    <md-button ng-if="vm.context == 'cute'" ng-click="vm.changeContext()">
+        The Void Whispers To Me...
+    </md-button>
+    <md-button ng-if="vm.context == 'spoopy'" class="md-raised" ng-click="vm.changeContext()">
+        This Is Not What I Asked For...
+    </md-button>
 </md-content>

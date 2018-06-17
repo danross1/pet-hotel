@@ -9,7 +9,7 @@ router.get('/', (req, res)=>{
             res.sendStatus(500);
         } else {
             let queryText = `SELECT owners.name as owner, pets.name as pet, breed, color, checkedIn, checkInDate, pets.id, owner_id, image FROM pets
-                JOIN owners ON owners.id = owner_id`;            
+                JOIN owners ON owners.id = owner_id ORDER BY owner`;            
             client.query(queryText, function (errorMakingDatabaseQuery, result) {
                 done();
                 if (errorMakingDatabaseQuery) {
