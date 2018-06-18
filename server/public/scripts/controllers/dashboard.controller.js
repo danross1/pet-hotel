@@ -61,7 +61,8 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         } else {
             self.toggleEditMode();
             HotelService.editPet(petID, dataToSend).then(function(){
-            self.getPets();
+                self.clearInputs();
+                self.getPets();
             })
         }
     };
@@ -86,6 +87,10 @@ app.controller('DashboardController', ['HotelService', function(HotelService){
         self.petColorIn = '';
         self.ownerIn = '';
         self.imageIn = '';
+        self.petNameEdit = '';
+        self.petBreedEdit = '';
+        self.petColorEdit = '';
+        self.ownerEdit = '';
     }
 
     self.getPets();
