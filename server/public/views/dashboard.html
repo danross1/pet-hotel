@@ -70,7 +70,7 @@
             <span>Breed: {{pet.breed}}</span> <br>
             <span>Color: {{pet.color}}</span> <br>
             <span ng-switch="pet.checkedin">Checked In?:
-                <span ng-switch-when="true">{{pet.checkindate}}</span>
+                <span ng-switch-when="true">{{pet.checkindate | date: 'MM/dd/yyyy'}}</span>
                 <span ng-switch-when="false">No</span>
             </span>
         </md-card-content>
